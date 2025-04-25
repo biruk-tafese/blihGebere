@@ -5,7 +5,7 @@ const About = () => {
     <div className="bg-gray-50 min-h-screen py-12 px-6 md:px-12 lg:px-24">
     <div className=' mb-12  h-104'> 
       <img
-        src="/src/assets/logo.jpeg"
+        src="../../public/logo.jpeg"
         alt="Background"
         className=" inset-0 w-full h-full object-cover"
       />
@@ -26,7 +26,7 @@ const About = () => {
         {/* Mission */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="/src/assets/img/crop_1.jpg"
+            src="../../public/assets/img/crop_1.jpg"
             alt="Mission"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -39,7 +39,7 @@ const About = () => {
         {/* Vision */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="/src/assets/img/crop_2.jpeg"
+            src="../../public/assets/img/crop_2.jpg"
             alt="Vision"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -52,7 +52,7 @@ const About = () => {
         {/* Values */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="/src/assets/img/farm_ai.jpeg"
+            src="../../public/assets/img/farm_ai.jpeg"
             alt="Values"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -70,7 +70,7 @@ const About = () => {
           {/* Founder 1 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="/src/assets/founder1.jpg"
+              src="../../public/assets/logo.jpeg"
               alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
@@ -83,7 +83,7 @@ const About = () => {
           {/* Founder 2 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="/src/assets/founder2.jpg"
+              src="../../public/assets/logo.jpeg"
               alt="Founder 2"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
@@ -96,7 +96,7 @@ const About = () => {
           {/* Founder 3 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="/src/assets/founder3.jpg"
+              src="../../public/assets/logo.jpeg"
               alt="Founder 3"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />

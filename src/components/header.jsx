@@ -1,6 +1,6 @@
 import { useState } from "react"; // Import useState for managing the menu state
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import logo from "../assets/logo.jpeg"; // Adjust the path as necessary
+import logo from "../../public/assets/logo.jpeg"; // Adjust the path as necessary
 import { MenuIcon, XIcon } from "lucide-react"; // Import icons from lucide-react
 
 const Header = () => {
