@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Resource = () => {
   return (
@@ -15,12 +16,11 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Learn how to create an account, enter parameters, and get predictions using our AI tools.
           </p>
-          <a
-            href="/getting-started"
-            className="text-green-800 font-medium hover:underline"
-          >
-            Read More →
-          </a>
+          <Link to="/getting-started">  
+            <p className="text-green-800 font-medium hover:underline">
+              Read More →
+            </p>
+          </Link>
         </div>
 
         {/* Resource 2 */}
@@ -29,12 +29,12 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Watch step-by-step video tutorials to understand how to use our platform effectively.
           </p>
-          <a
-            href="/video-tutorials"
-            className="text-green-800 font-medium hover:underline"
-          >
-            Watch Now →
-          </a>
+          <Link to="/video-tutorials">
+
+                <p className='text-green-800 font-medium hover:underline'>
+                  Watch Now →
+                </p>
+            </Link>
         </div>
 
         {/* Resource 3 */}
@@ -43,12 +43,14 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Find answers to frequently asked questions about our AI tools and services.
           </p>
-          <a
-            href="/faqs"
-            className="text-green-800 font-medium hover:underline"
-          >
-            View FAQs →
-          </a>
+          <Link to="/faqs">
+            <p
+              
+              className="text-green-800 font-medium hover:underline"
+            >
+              View FAQs →
+            </p>
+          </Link>
         </div>
 
         {/* Resource 4 */}
@@ -57,12 +59,12 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Discover best practices for collecting data and using our AI tools for accurate predictions.
           </p>
-          <a
-            href="/best-practices"
-            className="text-green-800 font-medium hover:underline"
-          >
-            Learn More →
-          </a>
+         <Link to="/best-practices">
+            <p className="text-green-800 font-medium hover:underline">
+              Learn More →
+            </p>
+          </Link>
+
         </div>
 
         {/* Resource 5 */}
@@ -71,12 +73,11 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Join our community forum to connect with other users and share insights.
           </p>
-          <a
-            href="/community-forum"
-            className="text-green-800 font-medium hover:underline"
-          >
-            Join Now →
-          </a>
+          <Link to="/community-forum">
+            <p className="text-green-800 font-medium hover:underline">
+              Join Now →
+            </p>
+          </Link>
         </div>
 
         {/* Resource 6 */}
@@ -85,12 +86,11 @@ const Resource = () => {
           <p className="text-gray-600 mb-4">
             Need help? Contact our support team for assistance with any issues or questions.
           </p>
-          <a
-            href="/support"
-            className="text-green-800 font-medium hover:underline"
-          >
-            Contact Us →
-          </a>
+           <Link to="/support">
+            <p className="text-green-800 font-medium hover:underline">
+              Get Support →
+            </p>
+          </Link>
         </div>
       </div>
     </div>
