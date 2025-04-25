@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = () => {
   return (
-    <div className="bg-[url('../../public/assets/img/crop_1.jpg')] bg-cover bg-center bg-fixed min-h-screen flex items-center justify-center relative">
+    <div className="bg-[url('/assets/img/crop_1.jpg')] bg-cover bg-center bg-fixed min-h-screen flex items-center justify-center relative">
       <div className="absolute inset-0 bg-black opacity-50"></div> {/* Dark overlay for better text visibility */}
       <div className="relative z-10 p-8 bg-white bg-opacity-30 backdrop-blur-md rounded-lg shadow-lg text-center">
         <h1 className="text-4xl font-bold text-green-800 mb-4">Welcome to BlihGebere</h1>

@@ -5,7 +5,7 @@ const About = () => {
     <div className="bg-gray-50 min-h-screen py-12 px-6 md:px-12 lg:px-24">
     <div className=' mb-12  h-104'> 
       <img
-        src="../../public/logo.jpeg"
+        src="/assets/logo.jpeg"
         alt="Background"
         className=" inset-0 w-full h-full object-cover"
       />

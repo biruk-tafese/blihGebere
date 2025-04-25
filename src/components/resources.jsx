@@ -2,7 +2,7 @@ import React from 'react';
 
 const Resource = () => {
   return (
-    <div className="bg-[url('../../public/assets/img/farm_ai.jpeg)] bg-cover bg-center bg-fixed min-h-screen py-12 px-6 md:px-12 lg:px-24">
+    <div className="bg-[url('/assets/img/farm_ai.jpeg)] bg-cover bg-center bg-fixed min-h-screen py-12 px-6 md:px-12 lg:px-24">
       <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Resources</h1>
       <p className="text-lg text-center text-gray-700 mb-12">
         Explore our resources to learn how to use our AI-powered tools effectively and optimize your agricultural practices.

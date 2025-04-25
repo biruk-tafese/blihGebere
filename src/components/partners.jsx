@@ -10,12 +10,19 @@ import 'slick-carousel/slick/slick-theme.css';
 const Partners = () => {
 
   const companies = [
-    { name: 'Addis Ababa University', logo: '../../public/assets/aau_logo.jpg' },
-    { name: 'EthioTelecom', logo: '../../public/assets/tele_logo.jpeg' },
-    { name: 'iCog Labs', logo: '../../public/assets/icog_logo.png' },
-    { name: 'Ethiopia Agriculture Ministry', logo: '../../public/assets/ethioagri_logo.png' },
-    { name: 'FAO', logo: '../../public/assets/fao_logo.png' },
-    { name: 'Evonext', logo: '../../public/assets/my_lastest_logo.png' },
+
+    { name: 'Addis Ababa University', logo: '/assets/aau_logo.jpg' },
+  
+    { name: 'EthioTelecom', logo: '/assets/tele_logo.jpeg' },
+  
+    { name: 'iCog Labs', logo: '/assets/icog_logo.png' },
+  
+    { name: 'Ethiopia Agriculture Ministry', logo: '/assets/ethioagri_logo.png' },
+  
+    { name: 'FAO', logo: '/assets/fao_logo.png' },
+  
+    { name: 'Evonext', logo: '/assets/my_lastest_logo.png' },
+  
   ];
 
   const settings = {
