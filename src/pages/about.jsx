@@ -26,7 +26,7 @@ const About = () => {
         {/* Mission */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="../../public/assets/img/crop_1.jpg"
+            src="/assets/img/crop_1.jpg"
             alt="Mission"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -39,7 +39,7 @@ const About = () => {
         {/* Vision */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="../../public/assets/img/crop_2.jpg"
+            src="/assets/img/crop_2.jpeg"
             alt="Vision"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -52,7 +52,7 @@ const About = () => {
         {/* Values */}
         <div className="bg-white rounded-lg shadow-lg p-6 text-center">
           <img
-            src="../../public/assets/img/farm_ai.jpeg"
+            src="/assets/img/farm_ai.jpeg"
             alt="Values"
             className="h-32 w-32 mx-auto mb-4 rounded-full object-cover"
           />
@@ -70,7 +70,7 @@ const About = () => {
           {/* Founder 1 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="../../public/assets/logo.jpeg"
+              src="/assets/logo.jpeg"
               alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
@@ -83,7 +83,7 @@ const About = () => {
           {/* Founder 2 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="../../public/assets/logo.jpeg"
+              src="/assets/logo.jpeg"
               alt="Founder 2"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
@@ -96,7 +96,7 @@ const About = () => {
           {/* Founder 3 */}
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <img
-              src="../../public/assets/logo.jpeg"
+              src="/assets/logo.jpeg"
               alt="Founder 3"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
