@@ -132,7 +132,7 @@ const Prediction = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg transform hover:scale-105 transition-transform duration-300"
+        className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 shadow-lg transform hover:scale-105 transition-transform duration-300"
       >
         Predict
       </button>
@@ -152,13 +152,13 @@ const Prediction = () => {
             <div className="flex space-x-4">
               <button
                 onClick={saveResponse}
-                className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 focus:outline-none"
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 shadow-lg transform hover:scale-105 transition-transform duration-300"
               >
                 Save Response
               </button>
               <button
                 onClick={closeModal}
-                className="w-full bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none"
+                className="w-full bg-gray-400 text-red-400 py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none"
               >
                 Cancel
               </button>
