@@ -2,11 +2,11 @@ import React from 'react';
 
 const Support = () => {
   return (
-    <div className="bg-gray-50 min-h-screen py-12 px-6 md:px-12 lg:px-24">
+    <div className="bg-[url('/assets/img/crop_1.jpg')] min-h-screen py-12 px-6 md:px-12 lg:px-24">
       {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-green-800 mb-4">Support</h1>
-        <p className="text-lg text-gray-700">
+        <p className="text-lg text-gray-900">
           Need help? We're here to assist you. Reach out to us through the contact information below or send us an email.
         </p>
       </div>

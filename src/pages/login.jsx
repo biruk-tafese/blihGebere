@@ -39,13 +39,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-[url('/assets/img/crop_1.jpg')]">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-green-800 text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
           {/* Email/Phone Number Field */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email or Phone Number</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Enter Your Phone Number</label>
             <input
               type="text"
               name="emailOrPhone"

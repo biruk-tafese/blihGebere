@@ -6,7 +6,6 @@ const Register = () => {
   const { register } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     fullName: '',
-    email: '',
     phoneNumber: '',
     password: '',
     confirmPassword: '',
@@ -26,14 +25,12 @@ const Register = () => {
     }
     register({
       fullName: formData.fullName,
-      email: formData.email,
       phoneNumber: formData.phoneNumber,
     });
     alert('Registration successful!');
-    navigate('/login', { state: { email: formData.email, phoneNumber: formData.phoneNumber } }); // Pass data to login page
+    navigate('/login', { state: { phoneNumber: formData.phoneNumber } }); // Pass data to login page
     setFormData({
       fullName: '',
-      email: '',
       phoneNumber: '',
       password: '',
       confirmPassword: '',
@@ -41,7 +38,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-[url('/assets/img/crop_1.jpg')]">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-green-800 text-center mb-6">Register</h1>
         <form onSubmit={handleSubmit}>
@@ -58,21 +55,6 @@ const Register = () => {
               required
             />
           </div>
-
-          {/* Email Field */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-green-500 focus:border-green-500"
-              required
-            />
-          </div>
-
           {/* Phone Number Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
