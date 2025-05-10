@@ -20,7 +20,8 @@ import Header from './components/header'; // Import your Header component
 import NotFound from './pages/NotFound';
 import Footer from './components/footer';
 import FAQ from './pages/FAQ';
-
+import GettingStartedGuide from "./pages/getStartedGuide"
+import Videos from './pages/Videos';
 
 function App() {
 
@@ -46,6 +47,8 @@ function App() {
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/faqs" element={<FAQ />} />
+        <Route path='/getting-started' element={<GettingStartedGuide />} />
+        <Route path='/video-tutorials' element={<Videos />} />
         <Route path="/*" element={<NotFound />} />
 
       </Routes>
