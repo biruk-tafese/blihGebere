@@ -158,7 +158,7 @@ const Prediction = () => {
               </button>
               <button
                 onClick={closeModal}
-                className="w-full bg-gray-400 text-red-400 py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none"
+                className="w-full bg-gray-300 text-red-900 py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none"
               >
                 Cancel
               </button>
