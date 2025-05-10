@@ -83,51 +83,60 @@ const Prediction = () => {
     <div className="min-h-screen flex items-center justify-center bg-[url('/assets/img/crop_1.jpg')]">
       <div className="max-w-2xl items-center mx-auto p-8 bg-white rounded-lg shadow-lg mt-[6%]">
         <h1 className="text-3xl font-extrabold text-center text-green-700 mb-6">Crop Prediction</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Temperature (°C)</label>
-              <input
-                type="number"
-                name="temperature"
-                value={formData.temperature}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-green-500 focus:border-green-500"
-              />
-            </div>
+         <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-2">
+            Temperature (°C)
+          </label>
+          <input
+            type="number"
+            name="temperature"
+            value={formData.temperature}
+            onChange={handleChange}
+            required
+            className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-500"
+            placeholder="Enter temperature"
+          />
+        </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Rainfall (mm)</label>
-              <input
-                type="number"
-                name="rainfall"
-                value={formData.rainfall}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-green-500 focus:border-green-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Pesticide</label>
-              <input
-                type="number"
-                name="pesticide"
-                value={formData.pesticide}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-green-500 focus:border-green-500"
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-          >
-            Predict
-          </button>
-        </form>
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-2">
+            Rainfall (mm)
+          </label>
+          <input
+            type="number"
+            name="rainfall"
+            value={formData.rainfall}
+            onChange={handleChange}
+            required
+            className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-500"
+            placeholder="Enter rainfall"
+          />
+        </div>
 
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-2">
+            Pesticide (kg)
+          </label>
+          <input
+            type="number"
+            name="pesticide"
+            value={formData.pesticide}
+            onChange={handleChange}
+            required
+            className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-500"
+            placeholder="Enter pesticide amount"
+          />
+        </div>
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg transform hover:scale-105 transition-transform duration-300"
+      >
+        Predict
+      </button>
+    </form>
         {/* Modal for Prediction Result */}
         <Modal
           isOpen={isModalOpen}
