@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="bg-gradient-to-br from-green-900 via-gray-800 to-white min-h-screen py-12 px-6 md:px-12 lg:px-24">
+    <div className="bg-gradient-to-br bg-[url('/assets/img/crop_1.jpg')] to-white min-h-screen py-12 px-6 md:px-12 lg:px-24">
       {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 mb-4">
@@ -16,7 +16,7 @@ const About = () => {
       {/* Mission, Vision, and Values Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         {/* Mission */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+        <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
           <img
             src="/assets/img/crop_1.jpg"
             alt="Mission"
@@ -29,7 +29,7 @@ const About = () => {
         </div>
 
         {/* Vision */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+        <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
           <img
             src="/assets/img/crop_2.jpeg"
             alt="Vision"
@@ -42,7 +42,7 @@ const About = () => {
         </div>
 
         {/* Values */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+        <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
           <img
             src="/assets/img/farm_ai.jpeg"
             alt="Values"
@@ -62,7 +62,7 @@ const About = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Founder 1 */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
               src="/assets/logo.jpeg"
               alt="Founder 1"
@@ -75,7 +75,7 @@ const About = () => {
           </div>
 
           {/* Founder 2 */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
               src="/assets/logo.jpeg"
               alt="Founder 2"
@@ -88,7 +88,7 @@ const About = () => {
           </div>
 
           {/* Founder 3 */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 text-center">
+          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
               src="/assets/logo.jpeg"
               alt="Founder 3"
