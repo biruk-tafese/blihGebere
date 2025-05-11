@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { AUTH } from '../api/index.js'; // Import AUTH endpoints
 import { AuthContext } from '../context/AuthContextInstance';
 
 const Register = () => {
-  const { register } = useContext(AuthContext);
+  const { register } = useContext(AuthContext); // Use register from AuthContext
   const [formData, setFormData] = useState({
-    fullName: '',
-    phoneNumber: '',
+    full_name: '',
+    phone_number: '',
     password: '',
     confirmPassword: '',
   });
@@ -17,24 +19,39 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    register({
-      fullName: formData.fullName,
-      phoneNumber: formData.phoneNumber,
-    });
-    alert('Registration successful!');
-    navigate('/login', { state: { phoneNumber: formData.phoneNumber } });
-    setFormData({
-      fullName: '',
-      phoneNumber: '',
-      password: '',
-      confirmPassword: '',
-    });
+
+    try {
+      // Send POST request to the backend
+      const response = await axios.post(AUTH.REGISTER, {
+        full_name: formData.full_name,
+        phone_number: formData.phone_number,
+        password: formData.password,
+        user_type: "user",
+      });
+
+      // Handle successful registration
+      if (response.status === 201) {
+        const { token } = response.data; // Assuming backend returns token
+        register(token, formData.fullName); // Save token and user details
+        alert('Registration successful!');
+        navigate('/crop-prediction'); // Redirect to crop prediction page
+      }
+    } catch (error) {
+      // Handle errors
+      if (error.response && error.response.data) {
+        alert(`Error: ${error.response.data.message}`);
+      } else {
+        alert('An error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -51,8 +68,8 @@ const Register = () => {
             </label>
             <input
               type="text"
-              name="fullName"
-              value={formData.fullName}
+              name="full_name"
+              value={formData.full_name}
               onChange={handleChange}
               placeholder="Enter your full name"
               className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500"
@@ -67,8 +84,8 @@ const Register = () => {
             </label>
             <input
               type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
+              name="phone_number"
+              value={formData.phone_number}
               onChange={handleChange}
               placeholder="Enter your phone number"
               className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500"
@@ -108,25 +125,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Terms and Policies */}
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2 border-gray-300 rounded focus:ring-green-500"
-              required
-            />
-            <label className="text-sm text-gray-300">
-              I agree to the{' '}
-              <a
-                href="/terms"
-                className="text-green-400 hover:underline focus:outline-none"
-              >
-                Terms and Policies
-              </a>
-              .
-            </label>
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
@@ -135,17 +133,6 @@ const Register = () => {
             Register
           </button>
         </form>
-
-        {/* Login Link */}
-        <p className="text-center text-gray-300 mt-6">
-          Already have an account?{' '}
-          <a
-            href="/login"
-            className="text-green-400 font-medium hover:underline focus:outline-none"
-          >
-            Login
-          </a>
-        </p>
       </div>
     </div>
   );

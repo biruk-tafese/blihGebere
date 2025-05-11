@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContextInstance';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { AUTH } from '../api/index.js'; // Import AUTH from api_endpoints.js
 
 const Login = () => {
-  const { user } = useContext(AuthContext);
   const location = useLocation(); // Access data passed from Register
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    emailOrPhone: location.state?.email || '',
+    phone: location.state?.phoneNumber || '', // Pre-fill phone number if passed from Register
     password: '',
   });
   const [error, setError] = useState('');
@@ -19,22 +19,38 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    // Simulate login validation
-    if (
-      (formData.emailOrPhone === user?.email || formData.emailOrPhone === user?.phoneNumber) &&
-      formData.password === 'password123' // Replace with actual password validation logic
-    ) {
-      setSuccess('Login successful!');
-      setTimeout(() => {
-        navigate('/crop-prediction'); // Redirect to /prediction
-      }, 1000);
-    } else {
-      setError('phone number or password!');
+    try {
+      // Send POST request to backend for login
+      const response = await axios.post(AUTH.LOGIN, {
+        phone_number: formData.phone,
+        password: formData.password,
+      });
+
+      // Handle successful login
+      if (response.status === 200) {
+        setSuccess('Login successful!');
+        
+        // Optional: Save token to localStorage or context for authentication
+        const { token } = response.data; // Assuming backend returns a JWT token
+        localStorage.setItem('authToken', token);
+
+        // Redirect to crop prediction page
+        setTimeout(() => {
+          navigate('/crop-prediction');
+        }, 1000);
+      }
+    } catch (error) {
+      // Handle login errors
+      if (error.response && error.response.data) {
+        setError(`Error: ${error.response.data.message}`);
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -45,17 +61,17 @@ const Login = () => {
           Login
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email/Phone Number Field */}
+          {/* Phone Number Field */}
           <div>
             <label className="block text-sm font-semibold text-gray-300 mb-2">
-             Phone Number
+              Phone Number
             </label>
             <input
               type="text"
               name="phone"
-              value={formData.emailOrPhone}
+              value={formData.phone}
               onChange={handleChange}
-              placeholder="Enter your email or phone number"
+              placeholder="Enter your phone number"
               className="w-full bg-gray-900 text-white border border-gray-600 rounded-lg p-4 focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-500"
               required
             />
