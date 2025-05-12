@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { AUTH } from '../api/index.js'; // Import AUTH from api_endpoints.js
+import { AUTH } from '../api/index.js'; // Import AUTH endpoints
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContextInstance';
 
 const Login = () => {
   const location = useLocation(); // Access data passed from Register
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Use login from AuthContext
+
   const [formData, setFormData] = useState({
-    phone: location.state?.phoneNumber || '', // Pre-fill phone number if passed from Register
+    phone: location.state?.phone_number || '', // Pre-fill phone number if passed from Register
     password: '',
   });
   const [error, setError] = useState('');
@@ -34,10 +38,12 @@ const Login = () => {
       // Handle successful login
       if (response.status === 200) {
         setSuccess('Login successful!');
-        
-        // Optional: Save token to localStorage or context for authentication
-        const { token } = response.data; // Assuming backend returns a JWT token
-        localStorage.setItem('authToken', token);
+
+        // Extract data from response
+        const { token, phone_number } = response.data;
+
+        // Use AuthContext to manage state
+        login(token, phone_number);
 
         // Redirect to crop prediction page
         setTimeout(() => {

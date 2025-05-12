@@ -22,34 +22,52 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate passwords match
+    // Basic validations
+    if (!formData.full_name || !formData.phone_number || !formData.password || !formData.confirmPassword) {
+      alert('All fields are required!');
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(formData.phone_number)) {
+      alert('Phone number must be 10 digits');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
 
+    // Send request to backend
     try {
-      // Send POST request to the backend
+      console.log("Form Data Submitted:", {
+        full_name: formData.full_name,
+        phone_number: formData.phone_number,
+        password: formData.password,
+      });
+
       const response = await axios.post(AUTH.REGISTER, {
         full_name: formData.full_name,
         phone_number: formData.phone_number,
         password: formData.password,
-        user_type: "user",
       });
 
-      // Handle successful registration
       if (response.status === 201) {
-        const { token } = response.data; // Assuming backend returns token
-        register(token, formData.fullName); // Save token and user details
+        register(formData.full_name, formData.phone_number); // Save token and user details
         alert('Registration successful!');
-        navigate('/crop-prediction'); // Redirect to crop prediction page
+        navigate('/login'); // Redirect to crop prediction page
       }
     } catch (error) {
-      // Handle errors
+      console.error("Registration Error:", error); // Debug log
       if (error.response && error.response.data) {
-        alert(`Error: ${error.response.data.message}`);
+        alert(`Error: ${error.response.data.error}`);
       } else {
-        alert('An error occurred. Please try again.');
+        alert('An unexpected error occurred. Please try again.');
       }
     }
   };
@@ -61,7 +79,6 @@ const Register = () => {
           Register
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Full Name Field */}
           <div>
             <label className="block text-sm font-semibold text-gray-300 mb-2">
               Full Name
@@ -76,8 +93,6 @@ const Register = () => {
               required
             />
           </div>
-
-          {/* Phone Number Field */}
           <div>
             <label className="block text-sm font-semibold text-gray-300 mb-2">
               Phone Number
@@ -92,8 +107,6 @@ const Register = () => {
               required
             />
           </div>
-
-          {/* Password Field */}
           <div>
             <label className="block text-sm font-semibold text-gray-300 mb-2">
               Password
@@ -108,8 +121,6 @@ const Register = () => {
               required
             />
           </div>
-
-          {/* Confirm Password Field */}
           <div>
             <label className="block text-sm font-semibold text-gray-300 mb-2">
               Confirm Password
@@ -124,8 +135,6 @@ const Register = () => {
               required
             />
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 shadow-lg transform hover:scale-105 transition-transform duration-300"
