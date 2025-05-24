@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CheckCircleIcon, Trash2Icon } from 'lucide-react';
+import { CheckCircleIcon,FileDownIcon, Trash2Icon } from 'lucide-react';
 import { AuthContext } from '../context/AuthContextInstance';
 
 const Prediction = () => {
@@ -43,6 +43,42 @@ const Prediction = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
+    // Download handler
+  const handleDownload = async (item, type) => {
+    let url = '';
+    let filename = '';
+    if (type === 'pdf') {
+      url = 'http://127.0.0.1:5000/predict/download-result-pdf/';
+      filename = 'crop_prediction_report.pdf';
+    } else if (type === 'csv') {
+      url = 'http://127.0.0.1:5000/predict/download-result-csv/';
+      filename = 'crop_prediction_report.csv';
+    } else if (type === 'excel') {
+      url = 'http://127.0.0.1:5000/predict/download-result-excel/';
+      filename = 'crop_prediction_report.xlsx';
+    }
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user?.token}`,
+        },
+        body: JSON.stringify(item),
+      });
+      if (!res.ok) throw new Error('Download failed');
+      const blob = await res.blob();
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      window.URL.revokeObjectURL(link.href);
+    } catch (err) {
+      alert('Download failed.', err);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,7 +110,7 @@ const Prediction = () => {
         area: '',
       });
     } catch (err) {
-      setError('Prediction failed. Please try again.');
+      setError('Prediction failed. Please try again.', err);
     } finally {
       setLoading(false);
     }
@@ -119,6 +155,30 @@ const Prediction = () => {
                 <span className="font-semibold">Rainfall:</span> {item.average_rain_fall_mm_per_year}mm
                 <br />
                 <span className="font-semibold">Pesticides:</span> {item.pesticides_tonnes} t
+              </div>
+                
+              <div className="flex gap-2 mt-2">
+                <button
+                  className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded flex items-center gap-1 text-xs"
+                  onClick={() => handleDownload(item, 'pdf')}
+                  title="Download PDF"
+                >
+                  <FileDownIcon className="w-4 h-4" /> PDF
+                </button>
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded flex items-center gap-1 text-xs"
+                  onClick={() => handleDownload(item, 'csv')}
+                  title="Download CSV"
+                >
+                  <FileDownIcon className="w-4 h-4" /> CSV
+                </button>
+                <button
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded flex items-center gap-1 text-xs"
+                  onClick={() => handleDownload(item, 'excel')}
+                  title="Download Excel"
+                >
+                  <FileDownIcon className="w-4 h-4" /> Excel
+                </button>
               </div>
             </div>
           ))}
