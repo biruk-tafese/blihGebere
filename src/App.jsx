@@ -14,6 +14,7 @@ import Footer from './components/footer';
 import FAQ from './pages/FAQ';
 import GettingStartedGuide from './pages/getStartedGuide';
 import Videos from './pages/Videos';
+import Profile_settings from './pages/Profile_settings';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/faqs" element={<FAQ />} />
         <Route path="/getting-started" element={<GettingStartedGuide />} />
         <Route path="/video-tutorials" element={<Videos />} />
+        <Route path="/profile-settings" element={<Profile_settings />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
