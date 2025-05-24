@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // Fixed import (no curly braces since it's a default export)
+import {jwtDecode} from "jwt-decode"; // default export
 import { AuthContext } from "./AuthContextInstance";
-import { PROFILE } from "../api/index"; // Adjust the import path as necessary
+import { PROFILE } from "../api/index";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const isTokenValid = (token) => {
     try {
       const decoded = jwtDecode(token);
-      return decoded.exp * 1000 > Date.now(); // Check if token is valid
+      return decoded.exp * 1000 > Date.now();
     } catch (error) {
       console.error("Error decoding token:", error);
       return false;
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (token) => {
     try {
       localStorage.setItem("authToken", token);
-      await fetchUserProfile(token); // Fetch profile details after login
+      await fetchUserProfile(token);
     } catch (error) {
       console.error("Error during login:", error);
       logout();
@@ -73,12 +73,37 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Failed to fetch user profile");
       }
       const data = await response.json();
-      setUser({ token, ...data }); // Combine token and user details
+      setUser({ token, ...data });
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      logout(); // Clear invalid data if fetching fails
+      logout();
     }
   };
+
+  // --- Predict function ---
+  const predict = async (parameters) => {
+    if (!user?.token) {
+      throw new Error("User not authenticated");
+    }
+    try {
+      const response = await fetch("http://127.0.0.1:5000/predict", { // <-- FIXED URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(parameters),
+      });
+      if (!response.ok) {
+        throw new Error("Prediction failed");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Prediction error:", error);
+      throw error;
+    }
+  };
+  // --- End Predict function ---
 
   const logout = () => {
     console.log("Logout called");
@@ -92,7 +117,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("authToken");
     if (token && isTokenValid(token)) {
       try {
-        fetchUserProfile(token); // Fetch the user profile if the token is valid
+        fetchUserProfile(token);
       } catch (error) {
         console.error("Invalid token during effect:", error);
         logout();
@@ -103,7 +128,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, predict }}>
       {children}
     </AuthContext.Provider>
   );
