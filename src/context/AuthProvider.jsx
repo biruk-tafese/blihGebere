@@ -127,9 +127,53 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+
+   // Add these to your AuthProvider and context value
+  const fetchOptions = async (token) => {
+    const headers = { Authorization: `Bearer ${token}` };
+    const cropsRes = await fetch('http://127.0.0.1:5000/crop', { headers });
+    const areasRes = await fetch('http://127.0.0.1:5000/area', { headers });
+    return {
+      crops: await cropsRes.json(),
+      areas: await areasRes.json(),
+    };
+  };
+  
+  const downloadReport = async (item, type, token) => {
+    let url = '';
+    let filename = '';
+    if (type === 'pdf') {
+      url = 'http://127.0.0.1:5000/predict/download-result-pdf/';
+      filename = 'crop_prediction_report.pdf';
+    } else if (type === 'csv') {
+      url = 'http://127.0.0.1:5000/predict/download-result-csv/';
+      filename = 'crop_prediction_report.csv';
+    } else if (type === 'excel') {
+      url = 'http://127.0.0.1:5000/predict/download-result-excel/';
+      filename = 'crop_prediction_report.xlsx';
+    }
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(item),
+    });
+    if (!res.ok) throw new Error('Download failed');
+    const blob = await res.blob();
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  };
+  
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, predict }}>
+    <AuthContext.Provider value={{
+      user, login, register, logout, predict, fetchOptions, downloadReport
+    }}>
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}

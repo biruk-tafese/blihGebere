@@ -3,7 +3,7 @@ import { CheckCircleIcon, FileDownIcon, Trash2Icon, MenuIcon, XIcon } from 'luci
 import { AuthContext } from '../context/AuthContextInstance';
 
 const Prediction = () => {
-  const { user } = useContext(AuthContext);
+  const { user, predict, fetchOptions, downloadReport } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     avg_temp: '',
@@ -20,24 +20,22 @@ const Prediction = () => {
   const [error, setError] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Fetch crops and areas from backend
+  // Fetch crops and areas from backend via context
   useEffect(() => {
-    const fetchOptions = async () => {
+    const loadOptions = async () => {
       try {
-        const headers = {
-          Authorization: `Bearer ${user?.token}`,
-        };
-        const cropsRes = await fetch('http://127.0.0.1:5000/crop', { headers });
-        const areasRes = await fetch('http://127.0.0.1:5000/area', { headers });
-        setCrops(await cropsRes.json());
-        setAreas(await areasRes.json());
+        if (user?.token) {
+          const { crops, areas } = await fetchOptions(user.token);
+          setCrops(crops);
+          setAreas(areas);
+        }
       } catch (err) {
         setCrops([]);
         setAreas([]);
       }
     };
-    if (user?.token) fetchOptions();
-  }, [user]);
+    loadOptions();
+  }, [user, fetchOptions]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,36 +43,10 @@ const Prediction = () => {
   };
 
   const handleDownload = async (item, type) => {
-    let url = '';
-    let filename = '';
-    if (type === 'pdf') {
-      url = 'http://127.0.0.1:5000/predict/download-result-pdf/';
-      filename = 'crop_prediction_report.pdf';
-    } else if (type === 'csv') {
-      url = 'http://127.0.0.1:5000/predict/download-result-csv/';
-      filename = 'crop_prediction_report.csv';
-    } else if (type === 'excel') {
-      url = 'http://127.0.0.1:5000/predict/download-result-excel/';
-      filename = 'crop_prediction_report.xlsx';
-    }
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,
-        },
-        body: JSON.stringify(item),
-      });
-      if (!res.ok) throw new Error('Download failed');
-      const blob = await res.blob();
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-      window.URL.revokeObjectURL(link.href);
+      await downloadReport(item, type, user.token);
     } catch (err) {
-      alert('Download failed.', err);
+      alert('Download failed.');
     }
   };
 
@@ -83,18 +55,7 @@ const Prediction = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://127.0.0.1:5000/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) {
-        throw new Error('Prediction failed');
-      }
-      const data = await res.json();
+      const data = await predict(formData);
       const result = {
         ...formData,
         predicted_yield: data.predicted_yield,
@@ -130,32 +91,31 @@ const Prediction = () => {
       </div>
 
       {/* Sidebar (History) */}
-      <div
-        className={`
-          fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity md:static md:bg-transparent 
-          ${sidebarOpen ? 'block' : 'hidden'} md:block
-        `}
-        onClick={() => setSidebarOpen(false)}
-      ></div>
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
       <aside
-      className={`
-        fixed z-50 top-0 left-0 h-full  max-w-xs bg-gray-900 text-white p-6 flex flex-col transition-transform duration-300
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-        md:static md:translate-x-0 md:w-1/3 md:max-w-xs md:block
-      `}
-      style={{ maxHeight: '100vh' }}
-      onClick={e => e.stopPropagation()}
-    >
+        className={`
+          fixed z-50 top-0 left-0 h-full w-4/5 max-w-xs bg-gray-900 text-white p-6 flex flex-col transition-transform duration-300
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          md:static md:translate-x-0 md:w-1/3 md:max-w-xs md:block
+        `}
+        style={{ maxHeight: '100vh' }}
+        onClick={e => e.stopPropagation()}
+      >
         {/* Close button on mobile */}
         <div className="flex items-center justify-between md:hidden mb-4">
-        <span className="text-2xl font-bold text-green-400">Prediction History</span>
-        <button onClick={() => setSidebarOpen(false)}>
-          <XIcon className="w-7 h-7" />
-        </button>
-      </div>
+          <span className="text-2xl font-bold text-green-400">Prediction History</span>
+          <button onClick={() => setSidebarOpen(false)}>
+            <XIcon className="w-7 h-7" />
+          </button>
+        </div>
         {/* Title on desktop */}
-       <h2 className="hidden md:block text-2xl font-bold mb-4 text-green-400">Prediction History</h2>
-      <div className="flex-1 overflow-y-auto space-y-4" style={{ maxHeight: '80vh' }}>
+        <h2 className="hidden md:block text-2xl font-bold mb-4 text-green-400">Prediction History</h2>
+        <div className="flex-1 overflow-y-auto space-y-4" style={{ maxHeight: '80vh' }}>
           {predictionHistory.length === 0 && (
             <div className="text-gray-400">No predictions yet.</div>
           )}
