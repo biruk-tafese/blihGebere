@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CheckCircleIcon,FileDownIcon, Trash2Icon } from 'lucide-react';
+import { CheckCircleIcon, FileDownIcon, Trash2Icon, MenuIcon, XIcon } from 'lucide-react';
 import { AuthContext } from '../context/AuthContextInstance';
 
 const Prediction = () => {
@@ -18,6 +18,7 @@ const Prediction = () => {
   const [areas, setAreas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Fetch crops and areas from backend
   useEffect(() => {
@@ -43,8 +44,6 @@ const Prediction = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-
-    // Download handler
   const handleDownload = async (item, type) => {
     let url = '';
     let filename = '';
@@ -110,23 +109,53 @@ const Prediction = () => {
         area: '',
       });
     } catch (err) {
-      setError('Prediction failed. Please try again.', err);
+      setError('Prediction failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Delete a prediction from history
   const handleDelete = (idx) => {
     setPredictionHistory((prev) => prev.filter((_, i) => i !== idx));
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      {/* Left: Prediction History */}
-      <div className="w-full md:w-1/3 bg-gray-900 text-white p-6 flex flex-col">
-        <h2 className="text-2xl font-bold mb-4 text-green-400">Prediction History</h2>
-        <div className="flex-1 overflow-y-auto space-y-4" style={{ maxHeight: '80vh' }}>
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100">
+      {/* Mobile Hamburger */}
+      <div className="md:hidden flex items-center justify-between bg-gray-900 text-white px-4 py-3">
+        <span className="text-lg font-bold text-green-400">Prediction</span>
+        <button onClick={() => setSidebarOpen(true)}>
+          <MenuIcon className="w-7 h-7" />
+        </button>
+      </div>
+
+      {/* Sidebar (History) */}
+      <div
+        className={`
+          fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity md:static md:bg-transparent 
+          ${sidebarOpen ? 'block' : 'hidden'} md:block
+        `}
+        onClick={() => setSidebarOpen(false)}
+      ></div>
+      <aside
+      className={`
+        fixed z-50 top-0 left-0 h-full  max-w-xs bg-gray-900 text-white p-6 flex flex-col transition-transform duration-300
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+        md:static md:translate-x-0 md:w-1/3 md:max-w-xs md:block
+      `}
+      style={{ maxHeight: '100vh' }}
+      onClick={e => e.stopPropagation()}
+    >
+        {/* Close button on mobile */}
+        <div className="flex items-center justify-between md:hidden mb-4">
+        <span className="text-2xl font-bold text-green-400">Prediction History</span>
+        <button onClick={() => setSidebarOpen(false)}>
+          <XIcon className="w-7 h-7" />
+        </button>
+      </div>
+        {/* Title on desktop */}
+       <h2 className="hidden md:block text-2xl font-bold mb-4 text-green-400">Prediction History</h2>
+      <div className="flex-1 overflow-y-auto space-y-4" style={{ maxHeight: '80vh' }}>
           {predictionHistory.length === 0 && (
             <div className="text-gray-400">No predictions yet.</div>
           )}
@@ -156,8 +185,7 @@ const Prediction = () => {
                 <br />
                 <span className="font-semibold">Pesticides:</span> {item.pesticides_tonnes} t
               </div>
-                
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-2 mt-2 flex-wrap">
                 <button
                   className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded flex items-center gap-1 text-xs"
                   onClick={() => handleDownload(item, 'pdf')}
@@ -183,12 +211,12 @@ const Prediction = () => {
             </div>
           ))}
         </div>
-      </div>
+      </aside>
 
-      {/* Right: Chat-like Prediction Form */}
-      <div className="w-full md:w-2/3 flex flex-col justify-center items-center bg-white">
-        <div className="max-w-xl w-full p-8">
-          <h1 className="text-3xl font-extrabold text-center text-green-700 mb-6">Crop Yield Prediction</h1>
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col justify-center items-center bg-white">
+        <div className="max-w-xl w-full p-4 sm:p-8">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-center text-green-700 mb-6">Crop Yield Prediction</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
@@ -284,8 +312,8 @@ const Prediction = () => {
             </div>
           )}
           {predictionHistory.length > 0 && (
-            <div className="mt-8 flex flex-col items-end">
-              <div className="bg-green-100 border border-green-300 text-green-900 px-6 py-4 rounded-2xl shadow max-w-lg w-fit">
+            <div className="mt-8 flex flex-col items-center">
+              <div className="bg-green-100 border border-green-300 text-green-900 px-4 py-4 rounded-2xl shadow max-w-lg w-fit">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircleIcon className="h-6 w-6 text-green-600" />
                   <span className="font-bold">Latest Prediction</span>
@@ -303,7 +331,7 @@ Predicted Yield: ${predictionHistory[0].predicted_yield} tons/hectare`}
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };
