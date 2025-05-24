@@ -1,25 +1,46 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
 import HomePage from './pages/home_page';
-import Prediction from './pages/prediction'; // Create this component
-import Resources from './components/resources'; // Create this component
-import Support from './pages/support'; // Create this component
-import About from './pages/about'; // Create this component
-import Login from './pages/login'; // Create this component
-import Signup from './pages/register'; // Create this component
-import Header from './components/header'; // Import your Header component
+import Prediction from './pages/prediction';
+import Resources from './components/resources';
+import Support from './pages/support';
+import About from './pages/about';
+import Login from './pages/login';
+import Signup from './pages/register';
+import Header from './components/header';
 import NotFound from './pages/NotFound';
 import Footer from './components/footer';
 import FAQ from './pages/FAQ';
 import GettingStartedGuide from './pages/getStartedGuide';
 import Videos from './pages/Videos';
 import Profile_settings from './pages/Profile_settings';
+import Create_user from './admin/Create_user';
+import View_users from './admin/View_users';
+import AdminLogin from './admin/admin_login';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContextInstance';
 
-function App() {
+
+function AdminRoute({ children }) {
+  const { isAdminAuthenticated } = useContext(AuthContext);
+  if (!isAdminAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+  return children;
+}
+
+function useIsAdminRoute() {
+  const location = useLocation();
+  return location.pathname.startsWith('/admin');
+}
+
+function AppContent() {
+  const isAdminRoute = useIsAdminRoute();
+
   return (
-    <Router>
-      <Header />
+    <>
+      {!isAdminRoute && <Header />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/crop-prediction" element={<Prediction />} />
@@ -32,9 +53,40 @@ function App() {
         <Route path="/getting-started" element={<GettingStartedGuide />} />
         <Route path="/video-tutorials" element={<Videos />} />
         <Route path="/profile-settings" element={<Profile_settings />} />
+
+        {/* Admin login route */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected admin routes with sidebar */}
+        <Route
+          path="/admin/createuser"
+          element={
+            <AdminRoute>
+              <Create_user />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/view-users"
+          element={
+            <AdminRoute>
+              <View_users />
+            </AdminRoute>
+          }
+        />
+
+        {/* Catch-all route for 404 Not Found */}
         <Route path="/*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
