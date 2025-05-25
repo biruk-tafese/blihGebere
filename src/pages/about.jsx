@@ -1,6 +1,8 @@
 import React from 'react';
 import emebetphoto from '../assets/emebet_photo.jpg';
 import minasiephoto from '../assets/minsie_simon_photo.jpg';
+import yonasphoto from '../assets/yonas_buzuayehu_photo.jpg';
+import tamiratphoto from '../assets/tamirate_demeke_photo.jpg';
 
 const About = () => {
   return (
@@ -85,14 +87,14 @@ const About = () => {
             />
             <h3 className="text-xl font-semibold text-green-400 mb-2">Minasie Simon</h3>
             <p className="text-gray-300">
-              <span className="font-bold">UI/UX </span> <span className="text-green-400">|</span><span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold">Documentation Specialist</span>
+              <span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold"> Backend Developer</span>
             </p>
           </div>
 
           {/* Founder 3 */}
           <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
-              src={emebetphoto}
+              src={yonasphoto}
               alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
@@ -107,7 +109,7 @@ const About = () => {
            {/* Founder 4 */}
           <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
-              src={emebetphoto}
+              src={tamiratphoto}
               alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
