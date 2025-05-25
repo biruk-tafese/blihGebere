@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from '../components/hero';
 import HowItWorks from '../components/HowItWorks';
 import Resource from '../components/resources';
-import Partners from '../components/partners';
 
 const HomePage = () => {
   return (
@@ -17,11 +16,6 @@ const HomePage = () => {
         <section id="/#resources " className="w-full h-full bg-white">
            <Resource />
           </section>
-
-          <section id="/#partners " className="w-full h-full bg-white">
-           <Partners />
-          </section>
-        
       </main>
     </div>
   );
