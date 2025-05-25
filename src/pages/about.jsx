@@ -1,4 +1,6 @@
 import React from 'react';
+import emebetphoto from '../assets/emebet_photo.jpg';
+import minasiephoto from '../assets/minsie_simon_photo.jpg';
 
 const About = () => {
   return (
@@ -64,39 +66,55 @@ const About = () => {
           {/* Founder 1 */}
           <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
-              src="/assets/logo.jpeg"
+              src={emebetphoto}
               alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Dr. Abebe Kebede</h3>
+            <h3 className="text-xl font-semibold text-green-400 mb-2">Emebet Sisay</h3>
             <p className="text-gray-300">
-              An agricultural scientist with 20+ years of experience in sustainable farming practices.
+              <span className="font-bold">Frontend Developer </span> <span className="text-green-400">|</span><span className="font-bold"> Team Lead </span> <span className="text-green-400">|</span> <span className="font-bold">Documentation Specialist</span>
             </p>
           </div>
 
           {/* Founder 2 */}
           <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
-              src="/assets/logo.jpeg"
-              alt="Founder 2"
+              src={minasiephoto}
+              alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Ms. Sara Alemu</h3>
+            <h3 className="text-xl font-semibold text-green-400 mb-2">Minasie Simon</h3>
             <p className="text-gray-300">
-              A tech entrepreneur passionate about leveraging AI to transform agriculture in Africa.
+              <span className="font-bold">UI/UX </span> <span className="text-green-400">|</span><span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold">Documentation Specialist</span>
             </p>
           </div>
 
           {/* Founder 3 */}
           <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
             <img
-              src="/assets/logo.jpeg"
-              alt="Founder 3"
+              src={emebetphoto}
+              alt="Founder 1"
               className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
             />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Mr. Tesfaye Bekele</h3>
+            <h3 className="text-xl font-semibold text-green-400 mb-2">Yonas Buzuayehu</h3>
             <p className="text-gray-300">
-              A data scientist specializing in AI-driven solutions for the agricultural sector.
+              <span className="font-bold">Model Trainer </span> <span className="text-green-400">|</span><span className="font-bold"> Documentation Work </span> <span className="text-green-400">
+              </span>
+              </p>
+          </div>
+
+
+           {/* Founder 4 */}
+          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
+            <img
+              src={emebetphoto}
+              alt="Founder 1"
+              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
+            />
+            <h3 className="text-xl font-semibold text-green-400 mb-2">Tamirat Demeke</h3>
+            <p className="text-gray-300">
+              <span className="font-bold"> UX/UI </span> <span className="text-green-400">|</span><span className="font-bold"> Documentation </span> <span className="text-green-400">|
+              </span> 
             </p>
           </div>
         </div>

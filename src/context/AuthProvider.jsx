@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // default export
 import { AuthContext } from "./AuthContextInstance";
 import { PROFILE } from "../api/index";
 
@@ -10,17 +10,13 @@ export const AuthProvider = ({ children }) => {
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 < Date.now()) {
+          console.warn("Token has expired");
           localStorage.removeItem("authToken");
           return null;
         }
-        // Try to restore user_type and other info from localStorage if available
-        const storedUser = localStorage.getItem("userInfo");
-        if (storedUser) {
-          return { token, ...JSON.parse(storedUser) };
-        }
         return { token, ...decoded };
       } catch (error) {
-        localStorage.removeItem("authToken");
+        console.error("Invalid token during initialization:", error);
         return null;
       }
     }
@@ -31,31 +27,24 @@ export const AuthProvider = ({ children }) => {
     try {
       const decoded = jwtDecode(token);
       return decoded.exp * 1000 > Date.now();
-    } catch {
+    } catch (error) {
+      console.error("Error decoding token:", error);
       return false;
     }
   };
 
-  // login now stores user info (including user_type) in localStorage for persistence
- const login = async (token) => {
+  const login = async (token) => {
     try {
       localStorage.setItem("authToken", token);
-      const response = await fetch(PROFILE.GET_PROFILE, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) throw new Error("Failed to fetch user profile");
-      const data = await response.json();
-      // Use data.user if your backend returns { user: { ... } }
-      const userData = data.user ? data.user : data;
-      setUser({ token, ...userData });
-      localStorage.setItem("userInfo", JSON.stringify(userData));
+      await fetchUserProfile(token);
     } catch (error) {
+      console.error("Error during login:", error);
       logout();
     }
   };
 
   const register = (token, full_name, phone_number) => {
+    console.log("Register called with:", { token, full_name, phone_number });
     try {
       if (token) {
         localStorage.setItem("authToken", token);
@@ -66,46 +55,59 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("phoneNumber", phone_number);
         setUser({ full_name, phone_number });
       }
-    } catch {
+    } catch (error) {
+      console.error("Error during registration:", error);
       logout();
     }
   };
 
-  
-  
   const fetchUserProfile = async (token) => {
     try {
       const response = await fetch(PROFILE.GET_PROFILE, {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      if (!response.ok) throw new Error("Failed to fetch user profile");
+      if (!response.ok) {
+        throw new Error("Failed to fetch user profile");
+      }
       const data = await response.json();
-      const userData = data.user ? data.user : data;
-      setUser({ token, ...userData });
-      localStorage.setItem("userInfo", JSON.stringify(userData));
-    } catch {
+      setUser({ token, ...data });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
       logout();
     }
   };
 
+  // --- Predict function ---
   const predict = async (parameters) => {
-    if (!user?.token) throw new Error("User not authenticated");
-    const response = await fetch("http://127.0.0.1:5000/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify(parameters),
-    });
-    if (!response.ok) throw new Error("Prediction failed");
-    return await response.json();
+    if (!user?.token) {
+      throw new Error("User not authenticated");
+    }
+    try {
+      const response = await fetch("http://127.0.0.1:5000/predict", { // <-- FIXED URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(parameters),
+      });
+      if (!response.ok) {
+        throw new Error("Prediction failed");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Prediction error:", error);
+      throw error;
+    }
   };
+  // --- End Predict function ---
 
   const logout = () => {
+    console.log("Logout called");
     localStorage.removeItem("authToken");
-    localStorage.removeItem("userInfo");
     localStorage.removeItem("phoneNumber");
     localStorage.removeItem("fullName");
     setUser(null);
@@ -114,12 +116,19 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token && isTokenValid(token)) {
-      fetchUserProfile(token);
+      try {
+        fetchUserProfile(token);
+      } catch (error) {
+        console.error("Invalid token during effect:", error);
+        logout();
+      }
     } else {
       logout();
     }
   }, []);
 
+
+   // Add these to your AuthProvider and context value
   const fetchOptions = async (token) => {
     const headers = { Authorization: `Bearer ${token}` };
     const cropsRes = await fetch('http://127.0.0.1:5000/crop', { headers });
@@ -129,7 +138,7 @@ export const AuthProvider = ({ children }) => {
       areas: await areasRes.json(),
     };
   };
-
+  
   const downloadReport = async (item, type, token) => {
     let url = '';
     let filename = '';
@@ -159,12 +168,12 @@ export const AuthProvider = ({ children }) => {
     link.click();
     window.URL.revokeObjectURL(link.href);
   };
-
+  
   return (
     <AuthContext.Provider value={{
       user, login, register, logout, predict, fetchOptions, downloadReport
     }}>
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
