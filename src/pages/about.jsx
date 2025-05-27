@@ -43,7 +43,8 @@ const founders = [
     name: "Seifeselasse Hailu",
     photo: selassieHaile,
     roles: [
-      "Backend Developer"
+      "Backend Developer",
+      "Documentation Specialist",
     ]
   }
 ];
