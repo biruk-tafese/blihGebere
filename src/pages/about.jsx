@@ -130,7 +130,7 @@ const About = () => {
             />
             <h3 className="text-xl font-semibold text-green-400 mb-2">Seifeselasse Hailu</h3>
             <p className="text-gray-300">
-              <span className="font-bold"> Backend Developer</span> <span className="text-green-400">
+              <span className="font-bold"> Backend Developer</span> 
             </p>
             </div>  
         </div>
