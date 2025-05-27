@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContextInstance';
-import AdminSidebar from './admin_sidebar';
+import DashboardHome from './dashboard_home';
 
 const AdminLogin = () => {
   const { login } = useContext(AuthContext);
@@ -42,7 +42,7 @@ const AdminLogin = () => {
     // Show only the sidebar as the main content after successful login
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
-        <AdminSidebar />
+        <DashboardHome />
       </div>
     );
   }

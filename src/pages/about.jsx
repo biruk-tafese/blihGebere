@@ -3,6 +3,7 @@ import emebetphoto from '../assets/emebet_photo.jpg';
 import minasiephoto from '../assets/minsie_simon_photo.jpg';
 import yonasphoto from '../assets/yonas_buzuayehu_photo.jpg';
 import tamiratphoto from '../assets/tamirate_demeke_photo.jpg';
+import selassieHaile from '../assets/SeifeselasseHailu .jpg';
 
 const About = () => {
   return (
@@ -87,7 +88,7 @@ const About = () => {
             />
             <h3 className="text-xl font-semibold text-green-400 mb-2">Minasie Simon</h3>
             <p className="text-gray-300">
-              <span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold"> Backend Developer</span>
+              <span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold"> Ux/UI</span>
             </p>
           </div>
 
@@ -119,6 +120,19 @@ const About = () => {
               </span> 
             </p>
           </div>
+
+           {/* Founder 5 */}
+          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
+            <img
+              src={selassieHaile}
+              alt="Founder 1"
+              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
+            />
+            <h3 className="text-xl font-semibold text-green-400 mb-2">Seifeselasse Hailu</h3>
+            <p className="text-gray-300">
+              <span className="font-bold"> Backend Developer</span> <span className="text-green-400">
+            </p>
+            </div>  
         </div>
       </div>
     </div>

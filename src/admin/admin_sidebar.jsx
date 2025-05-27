@@ -1,10 +1,10 @@
+// AFTER (Corrected AdminSidebar.jsx)
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContextInstance';
 
 const AdminSidebar = () => {
-  // Get user info from context or localStorage
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext); // Also get logout for a logout button
   const userInfo = user || JSON.parse(localStorage.getItem('userInfo')) || {};
 
   return (
@@ -19,7 +19,7 @@ const AdminSidebar = () => {
       </div>
       <nav className="flex flex-col gap-2">
         <NavLink
-          to="/admin/view-users"
+          to="/admin/view-users" // CORRECTED: Points to the view users route
           className={({ isActive }) =>
             `flex items-center gap-3 px-5 py-3 rounded-lg font-semibold transition ${
               isActive
@@ -32,7 +32,7 @@ const AdminSidebar = () => {
           View All Users
         </NavLink>
         <NavLink
-          to="/admin/createuser"
+          to="/admin/createuser" // CORRECTED: Points to the create user route
           className={({ isActive }) =>
             `flex items-center gap-3 px-5 py-3 rounded-lg font-semibold transition ${
               isActive
@@ -44,6 +44,14 @@ const AdminSidebar = () => {
           <span className="material-icons">person_add</span>
           Create New User
         </NavLink>
+        {/* Optional: Add a Logout button */}
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 px-5 py-3 rounded-lg font-semibold text-red-400 hover:bg-gray-700 hover:text-red-300 transition mt-4"
+        >
+          <span className="material-icons">logout</span>
+          Logout
+        </button>
       </nav>
       <div className="mt-auto pt-8 border-t border-gray-700 text-center text-xs text-gray-400">
         &copy; {new Date().getFullYear()} Admin Dashboard

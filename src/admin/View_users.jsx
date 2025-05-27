@@ -8,8 +8,8 @@ const View_users = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const adminUsers = users.filter(u => u.user_type === 'admin');
-  console.log('Admin Users:', adminUsers);
+  // const adminUsers = users.filter(u => u.user_type === 'admin');
+  // console.log('Admin Users:', adminUsers);
   // Fetch users from backend
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,6 +18,7 @@ const View_users = () => {
           headers: { Authorization: `Bearer ${user?.token}` },
         });
         const data = await res.json();
+        console.log('Fetched Users:', data);
         if (!res.ok) throw new Error(data.error || 'Failed to fetch users');
         setUsers(data.users || []);
       } catch (err) {

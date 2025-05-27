@@ -55,11 +55,11 @@ function AppContent() {
         <Route path="/profile-settings" element={<Profile_settings />} />
 
         {/* Admin login route */}
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/*" element={<AdminLogin />} />
 
         {/* Protected admin routes with sidebar */}
         <Route
-          path="/admin/createuser"
+          path="/createuser"
           element={
             <AdminRoute>
               <Create_user />
@@ -67,7 +67,7 @@ function AppContent() {
           }
         />
         <Route
-          path="/admin/view-users"
+          path="/view-users"
           element={
             <AdminRoute>
               <View_users />
