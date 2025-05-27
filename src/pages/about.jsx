@@ -5,6 +5,49 @@ import yonasphoto from '../assets/yonas_buzuayehu_photo.jpg';
 import tamiratphoto from '../assets/tamirate_demeke_photo.jpg';
 import selassieHaile from '../assets/SeifeselasseHailu .jpg';
 
+const founders = [
+  {
+    name: "Emebet Sisay",
+    photo: emebetphoto,
+    roles: [
+      "Frontend Developer",
+      "Team Lead",
+      "Documentation Specialist"
+    ]
+  },
+  {
+    name: "Minasie Simon",
+    photo: minasiephoto,
+    roles: [
+      "AI Training",
+      "Ux/UI"
+    ]
+  },
+  {
+    name: "Yonas Buzuayehu",
+    photo: yonasphoto,
+    roles: [
+      "Model Trainer",
+      "Documentation Work"
+    ]
+  },
+  {
+    name: "Tamirat Demeke",
+    photo: tamiratphoto,
+    roles: [
+      "UX/UI",
+      "Documentation"
+    ]
+  },
+  {
+    name: "Seifeselasse Hailu",
+    photo: selassieHaile,
+    roles: [
+      "Backend Developer"
+    ]
+  }
+];
+
 const About = () => {
   return (
     <div className="bg-gradient-to-br bg-[url('/assets/img/crop_1.jpg')] to-white min-h-screen py-12 px-6 md:px-12 lg:px-24">
@@ -66,73 +109,29 @@ const About = () => {
           Meet Our Founders
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Founder 1 */}
-          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
-            <img
-              src={emebetphoto}
-              alt="Founder 1"
-              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
-            />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Emebet Sisay</h3>
-            <p className="text-gray-300">
-              <span className="font-bold">Frontend Developer </span> <span className="text-green-400">|</span><span className="font-bold"> Team Lead </span> <span className="text-green-400">|</span> <span className="font-bold">Documentation Specialist</span>
-            </p>
-          </div>
-
-          {/* Founder 2 */}
-          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
-            <img
-              src={minasiephoto}
-              alt="Founder 1"
-              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
-            />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Minasie Simon</h3>
-            <p className="text-gray-300">
-              <span className="font-bold"> AI Training </span> <span className="text-green-400">|</span> <span className="font-bold"> Ux/UI</span>
-            </p>
-          </div>
-
-          {/* Founder 3 */}
-          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
-            <img
-              src={yonasphoto}
-              alt="Founder 1"
-              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
-            />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Yonas Buzuayehu</h3>
-            <p className="text-gray-300">
-              <span className="font-bold">Model Trainer </span> <span className="text-green-400">|</span><span className="font-bold"> Documentation Work </span> <span className="text-green-400">
-              </span>
+          {founders.map((founder, idx) => (
+            <div
+              key={idx}
+              className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center"
+            >
+              <img
+                src={founder.photo}
+                alt={founder.name}
+                className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
+              />
+              <h3 className="text-xl font-semibold text-green-400 mb-2">{founder.name}</h3>
+              <p className="text-gray-300">
+                {founder.roles.map((role, i) => (
+                  <span key={i}>
+                    <span className="font-bold">{role}</span>
+                    {i < founder.roles.length - 1 && (
+                      <span className="text-green-400"> | </span>
+                    )}
+                  </span>
+                ))}
               </p>
-          </div>
-
-
-           {/* Founder 4 */}
-          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
-            <img
-              src={tamiratphoto}
-              alt="Founder 1"
-              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
-            />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Tamirat Demeke</h3>
-            <p className="text-gray-300">
-              <span className="font-bold"> UX/UI </span> <span className="text-green-400">|</span><span className="font-bold"> Documentation </span> <span className="text-green-400">|
-              </span> 
-            </p>
-          </div>
-
-           {/* Founder 5 */}
-          <div className="bg-gradient-to-br from-green-800 to-green-700 rounded-lg shadow-2xl p-6 text-center">
-            <img
-              src={selassieHaile}
-              alt="Founder 1"
-              className="h-40 w-40 mx-auto mb-4 rounded-full object-cover"
-            />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Seifeselasse Hailu</h3>
-            <p className="text-gray-300">
-              <span className="font-bold"> Backend Developer</span> 
-            </p>
-            </div>  
+            </div>
+          ))}
         </div>
       </div>
     </div>
